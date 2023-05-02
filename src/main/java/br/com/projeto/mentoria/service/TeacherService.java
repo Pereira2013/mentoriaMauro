@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public class TeacherService {
-    public void save(Teacher teacher) {
+    public void create(Teacher teacher) {
         //teacherRepository.save(teacher);
     }
 

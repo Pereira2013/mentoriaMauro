@@ -19,15 +19,15 @@ public class TeacherController {
         return null;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Teacher findById(@PathVariable(name = "id") int id) {
         return null;
     }
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public Teacher update(@PathVariable(name = "id") int id, @RequestBody Teacher teacher) {
         return null;
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public Teacher delete(@PathVariable(name = "id") int id) {
         return null;
     }
