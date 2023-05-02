@@ -41,4 +41,11 @@ public class Teacher {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getCPF());
     }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
