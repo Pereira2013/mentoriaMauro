@@ -2,7 +2,7 @@ package br.com.projeto.mentoria.domain;
 
 import java.util.Objects;
 
-public class Professor {
+public class Teacher {
     private int id;
     private String name;
     private String CPF;
@@ -33,7 +33,7 @@ public class Professor {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Professor professor = (Professor) o;
+        Teacher professor = (Teacher) o;
         return getId() == professor.getId() && Objects.equals(getName(), professor.getName()) && Objects.equals(getCPF(), professor.getCPF());
     }
 
