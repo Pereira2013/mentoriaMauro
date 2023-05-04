@@ -1,10 +1,17 @@
 package br.com.projeto.mentoria.domain;
 
-import java.util.Objects;
+import jakarta.persistence.*;
 
+import java.util.Objects;
+@Entity(name = "db_teachers")
+@Table(name = "db_teachers")
 public class Teacher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "CPF")
     private String CPF;
 
     public int getId() {

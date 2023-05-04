@@ -2,20 +2,21 @@ package br.com.projeto.mentoria.repositories;
 
 import br.com.projeto.mentoria.domain.Teacher;
 
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
-public class TeacherRepository {
+import java.util.List;
+@Repository
+public class TeacherRepository{
     public Teacher create(Teacher teacher) {
         System.out.println("salvando" + teacher.toString());
-        return null;//teacherRepository.save(teacher);
+        return null;
     }
 
     public List<Teacher> findAll() {
         System.out.println("findall");
-
-
         return null;
     }
+
 
     public Teacher findById(int id) {
 
