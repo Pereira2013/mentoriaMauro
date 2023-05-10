@@ -2,22 +2,23 @@ package br.com.projeto.mentoria.domain;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Objects;
 
-@Entity(name = "db_teachers")
-@Table(name = "db_teachers")
-public class Teacher {
+@Entity(name = "db_students")
+@Table(name = "db_students")
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "CPF", nullable = false, length = 15)
+    @Column(name = "CPF", nullable = false, unique = true, length = 15)
     private String CPF;
-    @Column(name = "age", nullable = false)
-    private int age;
-    @Column(name = "email", nullable = false)
+    @Column(name = "birthday", nullable = false)
+    private Instant birthday;
+    @Column(name = "email", nullable = false, unique = true, length = 30)
     private String email;
     @Column(name = "status", nullable = false)
     private boolean status;
@@ -48,12 +49,12 @@ public class Teacher {
         this.CPF = CPF;
     }
 
-    public int getAge() {
-        return age;
+    public Instant getBirthday() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAge(Instant birthday) {
+        this.birthday = birthday;
     }
 
     public String getEmail() {
@@ -68,12 +69,12 @@ public class Teacher {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Teacher teacher = (Teacher) o;
-        return getId() == teacher.getId() && getAge() == teacher.getAge() && Objects.equals(getName(), teacher.getName()) && Objects.equals(getCPF(), teacher.getCPF()) && Objects.equals(getEmail(), teacher.getEmail());
+        Student student = (Student) o;
+        return getId() == student.getId() && status == student.status && Objects.equals(getName(), student.getName()) && Objects.equals(getCPF(), student.getCPF()) && Objects.equals(getBirthday(), student.getBirthday()) && Objects.equals(getEmail(), student.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCPF(), getAge(), getEmail());
+        return Objects.hash(getId(), getName(), getCPF(), getBirthday(), getEmail());
     }
 }

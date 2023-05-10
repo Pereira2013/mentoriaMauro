@@ -9,32 +9,37 @@ import java.util.List;
 @RequestMapping(value = "teachers")
 @RestController
 public class TeacherController {
+    private final TeacherService teacherService;
+
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
+    }
 
     @PostMapping
     public Teacher create(@RequestBody Teacher teacher) {
 
-        return new TeacherService().create(teacher);
+        return teacherService.create(teacher);
     }
 
     @GetMapping
     public List<Teacher> findAll() {
 
-        return new TeacherService().findAll();
+        return teacherService.findAll();
     }
 
     @GetMapping("{id}")
     public Teacher findById(@PathVariable(name = "id") int id) {
 
-        return new TeacherService().findById(id);
+        return teacherService.findById(id);
     }
     @PutMapping("{id}")
     public void update(@PathVariable(name = "id") int id, @RequestBody Teacher teacher) {
 
-        new TeacherService().update(teacher, id);
+        teacherService.update(teacher, id);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable(name = "id") int id) {
 
-        new TeacherService().delete(id);
+        teacherService.delete(id);
     }
 }
