@@ -1,80 +1,28 @@
 package br.com.projeto.mentoria.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.util.List;
 
-import java.time.Instant;
-import java.util.Objects;
+@Entity(name = "Student")
+@Table(name = "Student")
+public class Student extends Person {
 
-@Entity(name = "db_students")
-@Table(name = "db_students")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @Column(name = "CPF", nullable = false, unique = true, length = 15)
-    private String CPF;
-    @Column(name = "birthday", nullable = false)
-    private Instant birthday;
-    @Column(name = "email", nullable = false, unique = true, length = 30)
-    private String email;
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "birthdayDate", nullable = false)
+    private LocalDate birthdayDate;
 
-
-
-    public int getId() {
-        return id;
+    public LocalDate getBirthdayDate() {
+        return birthdayDate;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    } //newId?
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCPF() {
-        return CPF;
-    }
-
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
-    }
-
-    public Instant getBirthday() {
-        return birthday;
-    }
-
-    public void setAge(Instant birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBirthdayDate(LocalDate birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return getId() == student.getId() && status == student.status && Objects.equals(getName(), student.getName()) && Objects.equals(getCPF(), student.getCPF()) && Objects.equals(getBirthday(), student.getBirthday()) && Objects.equals(getEmail(), student.getEmail());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getCPF(), getBirthday(), getEmail());
+    protected List<String> validated() {
+        return null;
     }
 }
