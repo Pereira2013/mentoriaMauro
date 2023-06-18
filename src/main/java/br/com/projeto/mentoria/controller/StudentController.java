@@ -29,8 +29,8 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
     @PostMapping
-    public ResponseEntity<Student> create(@RequestBody Student student) {
-        var entity = studentService.create(student);
+    public ResponseEntity<Student> insert(@RequestBody Student student) {
+        var entity = studentService.insert(student);
         return ResponseEntity.created(URI.create("student" + entity.getId())).body(entity);
     }
     @PutMapping("{id}")

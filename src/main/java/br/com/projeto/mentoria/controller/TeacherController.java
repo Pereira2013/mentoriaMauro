@@ -1,5 +1,6 @@
 package br.com.projeto.mentoria.controller;
 
+import br.com.projeto.mentoria.domain.DTO.TeacherDto;
 import br.com.projeto.mentoria.domain.Teacher;
 import br.com.projeto.mentoria.services.TeacherService;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,19 @@ public class TeacherController {
         var teacher= teacherService.findAll();
         return ResponseEntity.ok(teacher);
     }
+    @GetMapping("/teachersDto")
+    public ResponseEntity<List<TeacherDto>> findAllDto() {
+        var teacherDto= teacherService.findAllDto();
+        return ResponseEntity.ok(teacherDto);
+    }
     @GetMapping("{id}")
     public ResponseEntity<Teacher> findById(@PathVariable(name = "id") int id) {
         var teacher = teacherService.findById(id);
         return ResponseEntity.ok(teacher);
     }
     @PostMapping
-    public ResponseEntity<Teacher> create(@RequestBody Teacher teacher) {
-        var entity = teacherService.create(teacher);
+    public ResponseEntity<Teacher> insert(@RequestBody Teacher teacher) {
+        var entity = teacherService.insert(teacher);
         return ResponseEntity.created(URI.create("teachers" + entity.getId())).body(entity);
     }
     @PutMapping("{id}")

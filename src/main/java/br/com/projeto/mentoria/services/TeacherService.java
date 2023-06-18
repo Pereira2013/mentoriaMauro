@@ -1,14 +1,14 @@
 package br.com.projeto.mentoria.services;
 
+import br.com.projeto.mentoria.domain.DTO.TeacherDto;
 import br.com.projeto.mentoria.domain.Person;
 import br.com.projeto.mentoria.domain.Teacher;
-import br.com.projeto.mentoria.repositories.TeacherRepository;
 import br.com.projeto.mentoria.exceptions.ApiException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import java.util.Optional;
+import br.com.projeto.mentoria.repositories.TeacherRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeacherService extends Teacher{
@@ -27,24 +27,36 @@ public class TeacherService extends Teacher{
         var result = teacherRepository.findById(id);
         return result.orElseThrow(() -> new ApiException("Entity not found.", HttpStatus.NOT_FOUND));
     }
-
+    public List<TeacherDto> findAllDto() {
+        var list = teacherRepository.findAll();
+        return convertToDto(list);
+    }
+    private List<TeacherDto> convertToDto(List<Teacher> teacherList) {
+        var listDto = teacherList.stream().map(Teacher::toDto).toList();
+        return listDto;
+    }
     public Teacher insert(Teacher object) {
         validate(object);
-        var teacher = teacherRepository.findByCpf(object.getCpf());
-        if (teacher == null) {
-            return teacherRepository.save(object);
-        } else if (teacher.getStatus()) {
-            throw new ApiException("This teacher is already exists and your status is active.",
-                    HttpStatus.CONFLICT);
-        } else {
-            throw new ApiException("This teacher is already exists and your status is desactive.",
-                    HttpStatus.BAD_REQUEST);
-        }
+        return teacherRepository.save(validateStatus(object));
+
     }
     private void validate(Teacher teacher) {
         List<String> erros = teacher.validated();
         if (!erros.isEmpty()) {
             throw new ApiException(erros, HttpStatus.BAD_REQUEST);
+        }
+    }
+    private Teacher validateStatus(Teacher object){
+        var teacher = teacherRepository.findByCpf(object.getCpf());
+        if (teacher == null) {
+            return object;
+        }
+        if(teacher.getStatus()){
+            throw new ApiException("This teacher is already exists and your status is active.",
+                    HttpStatus.CONFLICT);
+        } else {
+            throw new ApiException("This teacher is already exists and your status is desactive.",
+                    HttpStatus.BAD_REQUEST);
         }
     }
     public void update(Teacher object, int id) {
@@ -55,10 +67,6 @@ public class TeacherService extends Teacher{
         teacherRepository.deleteById(id);
     }
 
-    private void testePeople(Person people) {
-
-        System.out.println(people.toString());
-    }
 
 //    private void Reflexao(Person people) {
 //        try {

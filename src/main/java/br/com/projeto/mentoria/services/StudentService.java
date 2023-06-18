@@ -1,6 +1,7 @@
 package br.com.projeto.mentoria.services;
 
 import br.com.projeto.mentoria.domain.Student;
+import br.com.projeto.mentoria.domain.Teacher;
 import br.com.projeto.mentoria.exceptions.ApiException;
 import br.com.projeto.mentoria.repositories.StudentRepository;
 import java.util.List;
@@ -26,15 +27,27 @@ public class StudentService {
     }
 
     public Student insert(Student object) {
-        object.validate(object);
+        validate(object);
+        return studentRepository.save(validateStatus(object));
+
+
+    }
+    private void validate(Student student) {
+        List<String> erros = student.validated();
+        if (!erros.isEmpty()) {
+            throw new ApiException(erros, HttpStatus.BAD_REQUEST);
+        }
+    }
+    private Student validateStatus(Student object){
         var student = studentRepository.findByCpf(object.getCpf());
         if (student == null) {
-            return studentRepository.save(object);
-        } else if (student.getStatus()) {
-            throw new ApiException("This student is already exists and your status is active.",
+            return object;
+        }
+        if(student.getStatus()){
+            throw new ApiException("This teacher is already exists and your status is active.",
                     HttpStatus.CONFLICT);
         } else {
-            throw new ApiException("This student is already exists and your status is desactive.",
+            throw new ApiException("This teacher is already exists and your status is desactive.",
                     HttpStatus.BAD_REQUEST);
         }
     }
